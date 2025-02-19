@@ -36,13 +36,16 @@ class AllPosts extends Component
 
     public function render()
     {
-        $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
+        $posts = Post::withCount('likes')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->where('posts.title', 'like', "%{$this->search}%")
             ->orWhere('posts.description', 'like', "%{$this->search}%")
             ->orderBy('created_at', 'desc')
             ->orWhere('users.name', 'like', "%{$this->search}%")
-            ->select('posts.*', 'users.name as user')
+            ->select('posts.*', 'users.name as user', 'categories.name as category')
             ->paginate($this->perPage);
+
 
         return view('livewire.all-posts', compact('posts'));
     }

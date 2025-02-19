@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,8 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id // Use real data, or create if empty
         ];
     }
 }

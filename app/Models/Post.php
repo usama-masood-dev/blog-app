@@ -17,12 +17,6 @@ class Post extends Model
 
     public $timestamps = true;
 
-    // Post Relationship with user
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function getFormattedDateAttribute()
     {
         if ($this->created_at->isToday()) {
@@ -33,5 +27,26 @@ class Post extends Model
             return $this->created_at->diffForHumans();
         }
         return $this->created_at->format('d M Y, h:i A');
+    }
+
+    // Post Relationship with user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

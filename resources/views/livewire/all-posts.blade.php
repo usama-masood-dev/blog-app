@@ -40,6 +40,12 @@
                     <span class="text-sm text-slate-600">{{ $post->formatted_date }}</span>
                 </p>
             </div>
+            <div>
+                Category: {{ $post->category }}
+            </div>
+            <div>
+                Likes: {{ $post->likes_count }}
+            </div>
         </div>
 
     @empty
